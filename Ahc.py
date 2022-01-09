@@ -36,6 +36,7 @@ from threading import Thread, Lock
 from random import sample
 import networkx as nx
 import itertools
+import time #####################################################################################
 # TIMING ASSUMPTIONS
 # TODO: Event handling time, message sending time, assumptions about clock (drift, skew, ...)
 # TODO: 1. Asynch,  2. Synch 3. Partial-synch 4. Timed asynch
@@ -248,10 +249,18 @@ class ComponentModel:
     self.registry = ComponentRegistry()
     self.registry.add_component(self)
 
+    #start_time = time.perf_counter()
+
     for i in range(self.num_worker_threads):
       t = Thread(target=self.queue_handler, args=[self.inputqueue])
       t.daemon = True
       t.start()
+      #t.join() #######################################################################
+
+    # end_time = time.perf_counter()
+    # execution_time = end_time - start_time
+    # print(f'Total execution time: {execution_time} secs')
+
 
   def connect_me_to_component(self, name, component):
     try:
@@ -495,6 +504,9 @@ class Topology:
 
   def get_random_node(self):
     return self.nodes[sample(self.G.nodes(), 1)[0]]
+
+  def get_node(self, instancenumber):
+    return self.nodes[instancenumber]
 
 @singleton
 class FramerObjects():
