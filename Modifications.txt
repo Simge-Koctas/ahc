@@ -1,0 +1,5 @@
+Ahc.py
+class Topology:
+
+def get_node(self, instancenumber):
+    return self.nodes[instancenumber]
