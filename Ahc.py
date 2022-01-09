@@ -495,6 +495,9 @@ class Topology:
 
   def get_random_node(self):
     return self.nodes[sample(self.G.nodes(), 1)[0]]
+  
+  def get_node(self, instancenumber):
+    return self.nodes[instancenumber]
 
 @singleton
 class FramerObjects():
